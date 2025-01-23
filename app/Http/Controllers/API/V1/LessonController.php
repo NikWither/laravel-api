@@ -5,6 +5,8 @@ namespace App\Http\Controllers\API\V1;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Lesson;
+use App\Http\Requests\StoreLessonRequest;
+use App\Http\Requests\UpdateLessonRequest;
 
 class LessonController extends Controller
 {
@@ -19,32 +21,36 @@ class LessonController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreLessonRequest $request)
     {
-        //
+        return Lesson::create($request->all());
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Lesson $lesson)
     {
-        dd('it s working!');
+        return $lesson;
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateLessonRequest $request, Lesson $lesson)
     {
-        dd('it s working!');
+        $lesson->update($request->all());
+        return $lesson;
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Lesson $lesson)
     {
-        dd('it s working!');
+        $lesson->delete();
+        return response()->json([
+            'message' => 'Урок удален'
+        ]);
     }
 }
