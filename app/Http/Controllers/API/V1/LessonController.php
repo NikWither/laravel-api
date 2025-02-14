@@ -37,7 +37,7 @@ class LessonController extends Controller
         }
     
         if ($request->filled('subject_id')) {
-            $query->where('subject_id', $request->category_id);
+            $query->where('subject_id', $request->subject_id);
         }
     
         return $query->get();
