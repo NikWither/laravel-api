@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Lesson;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreLessonRequest extends FormRequest
+class FilterLessonRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +22,10 @@ class StoreLessonRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'subject_id' => 'required|exists:subjects,id',
-            'price' => 'required|integer',
+            'subject_id' => "nullable|integer|exists:subjects,id",
+            'student_id' => "nullable|integer|exists:students,id",
+            'price' => 'nullable|numeric',
+            'isPaid' => 'nullable|boolean',
         ];
     }
 }

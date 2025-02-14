@@ -5,8 +5,8 @@ namespace App\Http\Controllers\API\V1;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Subject;
-use App\Http\Requests\StoreSubjectRequest;
-use App\Http\Requests\UpdateSubjectRequest;
+use App\Http\Requests\Subject\StoreSubjectRequest;
+use App\Http\Requests\Subject\UpdateSubjectRequest;
 
 class SubjectsController extends Controller
 {

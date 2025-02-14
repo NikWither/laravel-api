@@ -5,17 +5,42 @@ namespace App\Http\Controllers\API\V1;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Lesson;
-use App\Http\Requests\StoreLessonRequest;
-use App\Http\Requests\UpdateLessonRequest;
+use App\Http\Requests\Lesson\FilterLessonRequest;
+use App\Http\Requests\Lesson\StoreLessonRequest;
+use App\Http\Requests\Lesson\UpdateLessonRequest;
+
 
 class LessonController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(FilterLessonRequest $request)
     {
-        return Lesson::all();
+
+        $query = Lesson::query();
+
+        if ($request->filled('price_min')) {
+            $query->where('price', '>=', $request->price_min);
+        }
+    
+        if ($request->filled('price_max')) {
+            $query->where('price', '<=', $request->price_max);
+        }
+    
+        if ($request->filled('isPaid')) {
+            $query->where('isPaid', $request->isPaid);
+        }
+
+        if ($request->filled('isPassed')) {
+            $query->where('isPassed', $request->isPassed);
+        }
+    
+        if ($request->filled('subject_id')) {
+            $query->where('subject_id', $request->category_id);
+        }
+    
+        return $query->get();
     }
 
     /**

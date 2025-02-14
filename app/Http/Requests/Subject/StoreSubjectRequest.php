@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Subject;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateLessonRequest extends FormRequest
+class StoreSubjectRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +22,7 @@ class UpdateLessonRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'subject_id' => 'required|exists:subjects,id',
-            'price' => 'required|integer',
+            'name' => 'required|max:255|min:2'
         ];
     }
 }
