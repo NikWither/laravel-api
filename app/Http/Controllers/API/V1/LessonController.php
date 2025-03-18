@@ -5,20 +5,18 @@ namespace App\Http\Controllers\API\V1;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Lesson;
+use App\Models\Subject;
 use App\Http\Requests\Lesson\FilterLessonRequest;
 use App\Http\Requests\Lesson\StoreLessonRequest;
 use App\Http\Requests\Lesson\UpdateLessonRequest;
+use App\Http\Resources\V1\LessonsResource;
 
 
 class LessonController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(FilterLessonRequest $request)
     {
-
-        $query = Lesson::query();
+        $query = Lesson::with('subject');
 
         if ($request->filled('price_min')) {
             $query->where('price', '>=', $request->price_min);
@@ -37,10 +35,10 @@ class LessonController extends Controller
         }
     
         if ($request->filled('subject_id')) {
-            $query->where('subject_id', $request->category_id);
+            $query->where('subject_id', $request->subject_id);
         }
     
-        return $query->get();
+        return LessonsResource::collection($query->get());
     }
 
     /**
@@ -48,7 +46,18 @@ class LessonController extends Controller
      */
     public function store(StoreLessonRequest $request)
     {
-        return Lesson::create($request->all());
+        $subject_price = $request->input('price');
+
+        $subject_name = $request->input('subject_name');
+
+        $subject_id = Subject::where('name', $subject_name)->first()->id;
+
+        return new LessonsResource(Lesson::create(
+            [
+                'subject_id' => $subject_id,
+                'price' => $subject_price
+            ]
+        ));
     }
 
     /**
@@ -56,7 +65,7 @@ class LessonController extends Controller
      */
     public function show(Lesson $lesson)
     {
-        return $lesson;
+        return new LessonsResource($lesson);
     }
 
     /**
@@ -65,7 +74,7 @@ class LessonController extends Controller
     public function update(UpdateLessonRequest $request, Lesson $lesson)
     {
         $lesson->update($request->all());
-        return $lesson;
+        return new LessonsResource($lesson);
     }
 
     /**

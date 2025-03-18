@@ -124,5 +124,40 @@ class TestDataApiV1 extends Seeder
             ],
 
         ]);
+
+        DB::table('students')->insert([
+            [
+                'name' => 'Иван Иванов',
+                'phone' => '+7 912 123 12',
+                'notes' => 'Прогуливает',
+                'classes' => '11',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Акакий Акакиевич',
+                'phone' => '+7 777 22 12',
+                'notes' => 'Не делает ДЗ',
+                'classes' => '10',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Шарик Шариков',
+                'phone' => null,
+                'notes' => 'Пробелы со средней школы',
+                'classes' => '8',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Петр Гринев',
+                'phone' => '+7 123 431 32',
+                'notes' => 'Сообразительный',
+                'classes' => '11',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+        ]);
     }
 }
