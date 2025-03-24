@@ -8,17 +8,23 @@ use App\Http\Requests\Student\StoreStudentRequest;
 use App\Http\Requests\Student\UpdateStudentRequest;
 use App\Http\Requests\Student\FilterStudentRequest;
 use App\Http\Resources\V1\StudentsResource;
+use App\Http\Filters\StudentsFilter;
+use Illuminate\Support\Facades\Route;
 
 class StudentsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(FilterStudentRequest $request)
+    public function index(FilterStudentRequest $request, StudentsFilter $filter)
     {
-        // $query = Student::query();
+        $query = Student::query();
 
-        return StudentsResource::collection(Student::all());
+        $filter = new StudentsFilter($query);
+
+        $query = $filter->apply($request);
+
+        return StudentsResource::collection($query->get());
     }
 
     /**
@@ -34,7 +40,9 @@ class StudentsController extends Controller
      */
     public function show(Student $student)
     {
-        return new StudentsResource($student);
+        return new StudentsResource(
+            Student::with('subjects')->findOrFail($student->id)
+        );
     }
 
     /**

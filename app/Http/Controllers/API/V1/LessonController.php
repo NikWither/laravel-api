@@ -10,13 +10,19 @@ use App\Http\Requests\Lesson\FilterLessonRequest;
 use App\Http\Requests\Lesson\StoreLessonRequest;
 use App\Http\Requests\Lesson\UpdateLessonRequest;
 use App\Http\Resources\V1\LessonsResource;
+use App\Http\Filters\LessonsFilter;
 
 
 class LessonController extends Controller
 {
     public function index(FilterLessonRequest $request)
     {
-        $query = Lesson::with('subject');
+        $query = Lesson::with('subject', 'student');
+
+        // $filter = new LessonsFilter($query);
+
+        // $query = $filter->apply($request);
+        
 
         if ($request->filled('price_min')) {
             $query->where('price', '>=', $request->price_min);
@@ -36,8 +42,8 @@ class LessonController extends Controller
     
         if ($request->filled('subject_id')) {
             $query->where('subject_id', $request->subject_id);
-        }
-    
+        }    
+
         return LessonsResource::collection($query->get());
     }
 

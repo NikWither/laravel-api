@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 use App\Models\Lesson;
 use App\Models\Student;
@@ -14,7 +15,7 @@ class Subject extends Model
 
     public function lessons() : HasMany
     {
-        return $this->hasMany(Lesson::class);
+        return $this->HasMany(Lesson::class);
     }
 
     public function students() : BelongsToMany
