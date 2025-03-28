@@ -241,5 +241,50 @@ class TestDataApiV1 extends Seeder
                 'subject_id' => 2,
             ],
         ]);
+
+        DB::table('day_weeks')->insert([
+            ['name' => 'пн'],
+            ['name' => 'вт'],
+            ['name' => 'ср'],
+            ['name' => 'чт'],
+            ['name' => 'пт'],
+            ['name' => 'сб'],
+            ['name' => 'вс'],
+        ]);
+
+        DB::table('student_day_week')->insert([
+            [
+                'student_id' => 1,
+                'day_week_id' => 1,
+            ],
+            [
+                'student_id' => 1,
+                'day_week_id' => 4,
+            ],
+            [
+                'student_id' => 2,
+                'day_week_id' => 3,
+            ],
+            [
+                'student_id' => 2,
+                'day_week_id' => 5,
+            ],
+            [
+                'student_id' => 3,
+                'day_week_id' => 2,
+            ],
+            [
+                'student_id' => 4,
+                'day_week_id' => 5,
+            ],
+            [
+                'student_id' => 4,
+                'day_week_id' => 7,
+            ],
+            [
+                'student_id' => 5,
+                'day_week_id' => 2,
+            ],
+        ]);
     }
 }

@@ -19,11 +19,6 @@ class LessonController extends Controller
     {
         $query = Lesson::with('subject', 'student');
 
-        // $filter = new LessonsFilter($query);
-
-        // $query = $filter->apply($request);
-        
-
         if ($request->filled('price_min')) {
             $query->where('price', '>=', $request->price_min);
         }

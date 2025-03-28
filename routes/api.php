@@ -17,4 +17,7 @@ Route::prefix('v1')->group(function () {
     Route::apiResource('subjects', SubjectsController::class);
 
     Route::apiResource('students', StudentsController::class);
+
+    Route::apiResource('day_weeks', StudentsController::class);
+
 });

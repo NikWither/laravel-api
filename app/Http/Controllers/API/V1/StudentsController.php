@@ -41,13 +41,13 @@ class StudentsController extends Controller
     public function show(Student $student)
     {
         return new StudentsResource(
-            Student::with('subjects')->findOrFail($student->id)
+            Student::with(['subjects', 'dayWeeks'])->findOrFail($student->id)
         );
     }
 
     /**
-     * Update the specified resource in storage.
-     */
+    * Update the specified resource in storage.
+    */
     public function update(UpdateStudentRequest $request, Student $student)
     {
         $student->update($request->all());
@@ -56,7 +56,7 @@ class StudentsController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     */
+    */
     public function destroy(Student $student)
     {
         $student->delete();
